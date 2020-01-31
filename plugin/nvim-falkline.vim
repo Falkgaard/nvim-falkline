@@ -1,4 +1,27 @@
 
+" Falkline {{{
+" NOTE: Might also be set in RedrawModeColors!
+call g:HL( 'StatusLine'             , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'StatusLineNC'           , 'black'      , 'none'       , 'bold'   )
+call g:HL( 'FalklineSeparator'      , 'dark_fg'    , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineModified'       , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineFiletype'       , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineFiletypeBody'   , 'white'      , 'mid_dark'   , 'italic' )
+call g:HL( 'FalklinePercentage'     , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklinePercentageBody' , 'dim_fg'     , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineLineGit'        , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineLineGitBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineLineGitSymbol'  , 'white'      , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineLineCol'        , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineLineColBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineAleOkBody'      , 'white'      , 'green'      , 'bold'   )
+call g:HL( 'FalklineAleWarningBody' , 'white'      , 'warning_lo' , 'bold'   )
+call g:HL( 'FalklineAleErrorBody'   , 'white'      , 'error'      , 'bold'   )
+call g:HL( 'FalklineAleSpacer'      , 'error'      , 'warning_lo' , 'none'   )
+" Primary and secondary colours, changed in RedrawModeColors()
+let g:FalklineMainA = 'mid_dark'
+let g:FalklineMainB = 'none'
+" Falkline }}}
 " Statusline {{{
 " Prerequisite Settings {{{
 set noshowmode
