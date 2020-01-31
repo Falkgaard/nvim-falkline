@@ -1,5 +1,26 @@
-
 " Falkline {{{
+let g:Palette.black               = ['#000000', 232]
+let g:Palette.white               = ['#FFFFFF', 231]
+let g:Palette.green               = ['#72D5AE',  20]
+let g:Palette.yellow              = ['#FFFF87', 228]
+let g:Palette.yellow_light        = ['#FFD7AF', 223]
+let g:Palette.red                 = ['#FF5F5F', 203]
+let g:Palette.mid_dark            = ['#333333', 237]
+let g:Palette.soft_dark           = ['#3D3D3D', 238]
+
+let g:Palette.mode_normal_light   = ['#94BFF3',  12]
+let g:Palette.mode_normal_dark    = ['#005FAF',  24]
+let g:Palette.mode_insert_light   = ['#72D5A3',  10]
+let g:Palette.mode_insert_dark    = ['#303030',  22]
+let g:Palette.mode_replace_light  = ['#FF5F5F', 203]
+let g:Palette.mode_replace_dark   = ['#380008',  52]
+let g:Palette.mode_terminal_light = ['#DDDDDD', 150]
+let g:Palette.mode_terminal_dark  = ['#111111', 235]
+let g:Palette.mode_visual_light   = ['#FFFF87',  20]
+let g:Palette.mode_visual_dark    = ['#AF8700', 136]
+let g:Palette.mode_command_light  = ['#AF87FF', 141]
+let g:Palette.mode_command_dark   = ['#5F0087',  54]
+
 " NOTE: Might also be set in RedrawModeColors!
 call g:HL( 'StatusLine'             , 'mid_dark'   , 'none'       , 'none'   )
 call g:HL( 'StatusLineNC'           , 'black'      , 'none'       , 'bold'   )
@@ -15,9 +36,9 @@ call g:HL( 'FalklineLineGitSymbol'  , 'white'      , 'mid_dark'   , 'none'   )
 call g:HL( 'FalklineLineCol'        , 'mid_dark'   , 'none'       , 'none'   )
 call g:HL( 'FalklineLineColBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
 call g:HL( 'FalklineAleOkBody'      , 'white'      , 'green'      , 'bold'   )
-call g:HL( 'FalklineAleWarningBody' , 'white'      , 'warning_lo' , 'bold'   )
-call g:HL( 'FalklineAleErrorBody'   , 'white'      , 'error'      , 'bold'   )
-call g:HL( 'FalklineAleSpacer'      , 'error'      , 'warning_lo' , 'none'   )
+call g:HL( 'FalklineAleWarningBody' , 'white'      , 'yellow'     , 'bold'   )
+call g:HL( 'FalklineAleErrorBody'   , 'white'      , 'red'        , 'bold'   )
+call g:HL( 'FalklineAleSpacer'      , 'red'        , 'yellow'     , 'none'   )
 " Primary and secondary colours, changed in RedrawModeColors()
 let g:FalklineMainA = 'mid_dark'
 let g:FalklineMainB = 'none'
@@ -42,9 +63,9 @@ function! GetMaybeAleErrors() abort " {{{
    let l:all_errors     = l:counts.error + l:counts.style_error
    let l:all_non_errors = l:counts.total - l:all_errors
    if l:all_errors > 0
-      call g:HL( 'FalklineAleLeft' , 'error' , g:FalklineMainB , 'none' )
+      call g:HL( 'FalklineAleLeft' , 'red' , g:FalklineMainB , 'none' )
       if l:all_non_errors == 0
-         call g:HL( 'FalklineAleRight' , 'error' , g:FalklineMainB , 'none' )
+         call g:HL( 'FalklineAleRight' , 'red' , g:FalklineMainB , 'none' )
       endif
       return printf("%d", l:all_errors)
    else
@@ -57,9 +78,9 @@ function! GetMaybeAleWarnings() abort " {{{
    let l:all_non_errors = l:counts.total - l:all_errors
    if l:all_non_errors > 0
       if l:all_errors == 0
-         call g:HL( 'FalklineAleLeft' , 'warning_lo' , g:FalklineMainB , 'none' )
+         call g:HL( 'FalklineAleLeft' , 'yellow' , g:FalklineMainB , 'none' )
       endif
-      call g:HL( 'FalklineAleRight' , 'warning_lo' , g:FalklineMainB , 'none' )
+      call g:HL( 'FalklineAleRight' , 'yellow' , g:FalklineMainB , 'none' )
       return printf("%d", l:all_non_errors)
    else
       return ''
@@ -76,15 +97,15 @@ endfunction " }}}
 function! RedrawModeColors(mode) " {{{
    " Toggle between bar and floating capsules depending on split status: {{{
    if len(tabpagebuflist()) == 1 || g:inGoyo == 1
-      let g:FalklineMainA = 'mid_dark'
+      let g:FalklineMainA = 'grey'
       let g:FalklineMainB = 'none'
    else
       let g:FalklineMainA = 'black'
-      let g:FalklineMainB = 'mid_dark'
+      let g:FalklineMainB = 'grey'
    endif
    call g:HL( 'StatusLine'             , 'yellow_light'  , g:FalklineMainB             )
    call g:HL( 'StatusLineNC'           , 'black'         , g:FalklineMainB  , 'bold'   )
-   call g:HL( 'FalklineSeparator'      , 'dark_fg'       , g:FalklineMainA             )
+   call g:HL( 'FalklineSeparator'      , 'mid_dark'      , g:FalklineMainA             )
    call g:HL( 'FalklineModified'       , g:FalklineMainA , g:FalklineMainB             )
    call g:HL( 'FalklineFiletype'       , g:FalklineMainA , g:FalklineMainB             )
    call g:HL( 'FalklineFiletypeBody'   , 'white'         , g:FalklineMainA  , 'italic' )
