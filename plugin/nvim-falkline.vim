@@ -7,6 +7,8 @@ let g:Palette.yellow_light        = ['#FFD7AF', 223]
 let g:Palette.red                 = ['#FF5F5F', 203]
 let g:Palette.mid_dark            = ['#333333', 237]
 let g:Palette.soft_dark           = ['#3D3D3D', 238]
+let g:Palette.dim_fg              = ['#777777', 239] " TODO
+let g:Palette.dark_fg             = ['#555555', 239] " TODO
 
 let g:Palette.mode_normal_light   = ['#94BFF3',  12]
 let g:Palette.mode_normal_dark    = ['#005FAF',  24]
