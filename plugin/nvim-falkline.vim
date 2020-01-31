@@ -99,11 +99,11 @@ endfunction " }}}
 function! RedrawModeColors(mode) " {{{
    " Toggle between bar and floating capsules depending on split status: {{{
    if len(tabpagebuflist()) == 1 || g:inGoyo == 1
-      let g:FalklineMainA = 'soft_dark'
+      let g:FalklineMainA = 'mid_dark'
       let g:FalklineMainB = 'none'
    else
       let g:FalklineMainA = 'black'
-      let g:FalklineMainB = 'soft_dark'
+      let g:FalklineMainB = 'mid_dark'
    endif
    call g:HL( 'StatusLine'             , 'yellow_light'  , g:FalklineMainB             )
    call g:HL( 'StatusLineNC'           , 'black'         , g:FalklineMainB  , 'bold'   )
