@@ -141,8 +141,8 @@ endfunction
 " Cursor Line Mode Colors {{{
 " Hack to make line bg reset after escaping from insert or replace mode
 au InsertLeave * 
-         \ call g:HL( 'CursorLine'   , 'none'              , 'soft_dark' ) |
-         \ call g:HL( 'CursorLineNr' , 'mode_normal_light' , 'soft_dark' ) 
+         \ call g:HL( 'CursorLine'   , 'none'              , g:FalklineNLine ) |
+         \ call g:HL( 'CursorLineNr' , 'mode_normal_light' , g:FalklineNLine ) 
 function! s:ModeColorChangeTrigger(id)
    call RedrawModeColors( mode() )
 endfunction
