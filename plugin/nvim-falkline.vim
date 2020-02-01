@@ -100,8 +100,8 @@ function! RedrawModeColors(mode) " {{{
    " Set mode dependent colors: {{{
    " Normal mode
    if a:mode == 'n'
-     call g:HL( 'CursorLineNr'       , 'mode_normal_light'   , 'soft_dark'             , 'none' )
-     call g:HL( 'CursorLine'         , 'none'                , g:FalklineNLine         , 'none' )
+     call g:HL( 'CursorLineNr'       , 'mode_normal_light'   , g:FalkLineNLine         , 'bold' )
+     call g:HL( 'CursorLine'         , 'none'                , g:FalklineNLine         , 'bold' )
      call g:HL( 'FalklineAccent'     , 'mode_normal_light'   , 'none'                  , 'none' )
      call g:HL( 'FalklineAccentBody' , 'mode_normal_dark'    , 'mode_normal_light'     , 'none' )
    " Insert mode
