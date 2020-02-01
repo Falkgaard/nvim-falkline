@@ -1,28 +1,4 @@
 " Falkline {{{
-let g:Palette.black               = ['#000000', 232]
-let g:Palette.white               = ['#FFFFFF', 231]
-let g:Palette.green               = ['#72D5AE',  20]
-let g:Palette.yellow              = ['#FFFF87', 228]
-let g:Palette.yellow_light        = ['#FFD7AF', 223]
-let g:Palette.red                 = ['#FF5F5F', 203]
-let g:Palette.mid_dark            = ['#333333', 237]
-let g:Palette.soft_dark           = ['#3D3D3D', 238]
-let g:Palette.dim_fg              = ['#777777', 239] " TODO
-let g:Palette.dark_fg             = ['#555555', 239] " TODO
-
-let g:Palette.mode_normal_light   = ['#94BFF3',  12]
-let g:Palette.mode_normal_dark    = ['#005FAF',  24]
-let g:Palette.mode_insert_light   = ['#72D5A3',  10]
-let g:Palette.mode_insert_dark    = ['#303030',  22]
-let g:Palette.mode_replace_light  = ['#FF5F5F', 203]
-let g:Palette.mode_replace_dark   = ['#380008',  52]
-let g:Palette.mode_terminal_light = ['#DDDDDD', 150]
-let g:Palette.mode_terminal_dark  = ['#111111', 235]
-let g:Palette.mode_visual_light   = ['#FFFF87',  20]
-let g:Palette.mode_visual_dark    = ['#AF8700', 136]
-let g:Palette.mode_command_light  = ['#AF87FF', 141]
-let g:Palette.mode_command_dark   = ['#5F0087',  54]
-
 " NOTE: Might also be set in RedrawModeColors!
 call g:HL( 'StatusLine'             , 'mid_dark'   , 'none'       , 'none'   )
 call g:HL( 'StatusLineNC'           , 'black'      , 'none'       , 'bold'   )
