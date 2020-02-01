@@ -20,6 +20,7 @@ call g:HL( 'FalklineAleSpacer'      , 'red'        , 'yellow'     , 'none'   )
 " Primary and secondary colours, changed in RedrawModeColors()
 let g:FalklineMainA = 'mid_dark'
 let g:FalklineMainB = 'none'
+let g:FalklineNLine = 'soft_dark'
 " Falkline }}}
 " Statusline {{{
 " Prerequisite Settings {{{
@@ -100,7 +101,7 @@ function! RedrawModeColors(mode) " {{{
    " Normal mode
    if a:mode == 'n'
      call g:HL( 'CursorLineNr'       , 'mode_normal_light'   , 'soft_dark'             , 'none' )
-     call g:HL( 'CursorLine'         , 'none'                , 'soft_dark'             , 'none' )
+     call g:HL( 'CursorLine'         , 'none'                , g:FalklineNLine         , 'none' )
      call g:HL( 'FalklineAccent'     , 'mode_normal_light'   , 'none'                  , 'none' )
      call g:HL( 'FalklineAccentBody' , 'mode_normal_dark'    , 'mode_normal_light'     , 'none' )
    " Insert mode
