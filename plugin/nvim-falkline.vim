@@ -1,3 +1,4 @@
+" TODO: Git stats in git blob
 " Falkline {{{
 " NOTE: Might also be set in RedrawModeColors!
 call g:HL( 'StatusLine'             , 'mid_dark'   , 'none'       , 'none'   )
@@ -14,7 +15,7 @@ call g:HL( 'FalklineLineGitSymbol'  , 'white'      , 'mid_dark'   , 'none'   )
 call g:HL( 'FalklineLineCol'        , 'mid_dark'   , 'none'       , 'none'   )
 call g:HL( 'FalklineLineColBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
 call g:HL( 'FalklineAleOkBody'      , 'white'      , 'green'      , 'bold'   )
-call g:HL( 'FalklineAleWarningBody' , 'white'      , 'yellow'     , 'bold'   )
+call g:HL( 'FalklineAleWarningBody' , 'red'        , 'yellow'     , 'bold'   )
 call g:HL( 'FalklineAleErrorBody'   , 'white'      , 'red'        , 'bold'   )
 call g:HL( 'FalklineAleSpacer'      , 'red'        , 'yellow'     , 'none'   )
 " Primary and secondary colours, changed in RedrawModeColors()
@@ -149,10 +150,10 @@ endfunction
 call timer_start(100, function('s:ModeColorChangeTrigger'), {'repeat': -1})
 " Cursor Line Mode Colors }}}
 function! GetModeSymbol(mode) " {{{
-  " Normal mode
+" Normal mode
   if a:mode == 'n'
     return ''
-  " Insert mode
+" Insert mode
   elseif a:mode == 'i'
     return ''
 " Replace mode
@@ -161,7 +162,7 @@ function! GetModeSymbol(mode) " {{{
 " Command mode
   elseif a:mode == 'c'
     return 'גּ'
- " Terminal mode
+" Terminal mode
   elseif a:mode == 't'
     return ''
 " Visual mode
@@ -170,17 +171,17 @@ function! GetModeSymbol(mode) " {{{
   endif
 endfunction " }}}
 function! SetModifiedSymbol(modified) " {{{
-    if a:modified == 1
-        call g:HL( 'FalklineModifiedBody', 'red'  , g:FalklineMainA , 'bold' )
-    else
-        call g:HL( 'FalklineModifiedBody', 'green', g:FalklineMainA , 'bold' )
-    endif
+   if a:modified == 1
+      call g:HL( 'FalklineModifiedBody', 'red'  , g:FalklineMainA , 'bold' )
+   else
+      call g:HL( 'FalklineModifiedBody', 'green', g:FalklineMainA , 'bold' )
+   endif
     return '● '
 endfunction " }}}
 function! SetFiletype(filetype) " {{{
-  if a:filetype == ''
+   if a:filetype == ''
       return '-'
-  else
+   else
       return a:filetype
   endif
 endfunction " }}}
