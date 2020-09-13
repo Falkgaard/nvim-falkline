@@ -80,7 +80,7 @@ function! RedrawModeColors(mode) " {{{
       let g:FalklineMainA = 'mid_dark'
       let g:FalklineMainB = 'none'
    else
-      let g:FalklineMainA = 'black'
+      let g:FalklineMainA = 'dark_dark'
       let g:FalklineMainB = 'mid_dark'
    endif
    call g:HL( 'StatusLine'             , 'yellow_light'  , g:FalklineMainB             )
@@ -219,7 +219,7 @@ function! GetMaybeGitBranchSymbol() abort " {{{
 endfunction " }}}
 " Git Functions }}}
 " Functions }}}
-" Items {{{
+" Items {{{{{{
 " Hack to make the indicator proper when in command mode + padding
    set statusline=%{RedrawModeColors(mode())}%#Statusline#\ 
 
