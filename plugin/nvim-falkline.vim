@@ -14,10 +14,10 @@ call g:HL( 'FalklineLineGitBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
 call g:HL( 'FalklineLineGitSymbol'  , 'white'      , 'mid_dark'   , 'none'   )
 call g:HL( 'FalklineLineCol'        , 'mid_dark'   , 'none'       , 'none'   )
 call g:HL( 'FalklineLineColBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
-call g:HL( 'FalklineAleOkBody'      , 'white'      , 'green'      , 'bold'   )
-call g:HL( 'FalklineAleWarningBody' , 'red'        , 'yellow'     , 'bold'   )
-call g:HL( 'FalklineAleErrorBody'   , 'white'      , 'red'        , 'bold'   )
-call g:HL( 'FalklineAleSpacer'      , 'red'        , 'yellow'     , 'none'   )
+call g:HL( 'FalklineStatusOkBody'      , 'white'      , 'green'      , 'bold'   )
+call g:HL( 'FalklineStatusWarningBody' , 'red'        , 'yellow'     , 'bold'   )
+call g:HL( 'FalklineStatusErrorBody'   , 'white'      , 'red'        , 'bold'   )
+call g:HL( 'FalklineStatusSpacer'      , 'red'        , 'yellow'     , 'none'   )
 " Primary and secondary colours, changed in RedrawModeColors()
 let g:FalklineMainA = 'mid_dark'
 let g:FalklineMainB = 'none'
@@ -29,51 +29,96 @@ set noshowmode
 set laststatus=2
 " Prerequsite Settings }}}
 " Functions {{{
-" ALE Functions {{{
-function! GetMaybeAleOK() abort " {{{
-   let l:counts      =  ale#statusline#Count(bufnr(''))
-   if l:counts.total == 0
-      call g:HL( 'FalklineAleLeft'  , 'green' , g:FalklineMainB , 'none' )
-      call g:HL( 'FalklineAleRight' , 'green' , g:FalklineMainB , 'none' )
+" Coc Functions {{{
+function! GetMaybeCocOK() abort " {{{
+	let info = get(b:, 'coc_diagnostic_info', {})
+   if !get(info, 'error', 0) && !get(info, 'warning', 0)
+      call g:HL( 'FalklineStatusLeft'  , 'green' , g:FalklineMainB , 'none' )
+      call g:HL( 'FalklineStatusRight' , 'green' , g:FalklineMainB , 'none' )
    endif
    return ''
 endfunction " }}}
-function! GetMaybeAleErrors() abort " {{{
-   let l:counts         = ale#statusline#Count(bufnr(''))
-   let l:all_errors     = l:counts.error + l:counts.style_error
-   let l:all_non_errors = l:counts.total - l:all_errors
-   if l:all_errors > 0
-      call g:HL( 'FalklineAleLeft' , 'red' , g:FalklineMainB , 'none' )
-      if l:all_non_errors == 0
-         call g:HL( 'FalklineAleRight' , 'red' , g:FalklineMainB , 'none' )
+function! GetMaybeStatusErrors() abort " {{{
+	let info            = get(b:, 'coc_diagnostic_info', {})
+   let l:warning_count = get(info,'warning',0)
+   let l:error_count   = get(info,'error',0)
+   if l:error_count > 0
+      call g:HL( 'FalklineStatusLeft' , 'red' , g:FalklineMainB , 'none' )
+      if l:warning_count == 0
+         call g:HL( 'FalklineStatusRight' , 'red' , g:FalklineMainB , 'none' )
       endif
-      return printf("%d", l:all_errors)
+      return printf("%d", l:error_count)
    else
       return ''
    endif
 endfunction " }}}
-function! GetMaybeAleWarnings() abort " {{{
-   let l:counts         = ale#statusline#Count(bufnr(''))
-   let l:all_errors     = l:counts.error + l:counts.style_error
-   let l:all_non_errors = l:counts.total - l:all_errors
-   if l:all_non_errors > 0
-      if l:all_errors == 0
-         call g:HL( 'FalklineAleLeft' , 'yellow' , g:FalklineMainB , 'none' )
+function! GetMaybeCocWarnings() abort " {{{
+	let info            = get(b:, 'coc_diagnostic_info', {})
+   let l:warning_count = get(info,'warning',0)
+   let l:error_count   = get(info,'error',0)
+   if l:warning_count > 0
+      if l:error_count == 0
+         call g:HL( 'FalklineStatusLeft' , 'yellow' , g:FalklineMainB , 'none' )
       endif
-      call g:HL( 'FalklineAleRight' , 'yellow' , g:FalklineMainB , 'none' )
-      return printf("%d", l:all_non_errors)
+      call g:HL( 'FalklineStatusRight' , 'yellow' , g:FalklineMainB , 'none' )
+      return printf("%d", l:warning_count)
    else
       return ''
    endif
-   return l:all_non_errors == 0 ? '' : printf("%d", l:all_non_errors)
+   "return l:all_non_errors == 0 ? '' : printf("%d", l:all_non_errors) " TODO: remove?
 endfunction " }}}
-function! GetMaybeAleSpacer() abort " {{{
-   let l:counts            =  ale#statusline#Count(bufnr(''))
-   let l:all_errors        =  l:counts.error + l:counts.style_error
-   let l:all_non_errors    =  l:counts.total - l:all_errors
-   return l:all_non_errors == 0 || l:all_errors == 0 ? '' : '▌'
+function! GetMaybeCocSpacer() abort " {{{
+	let info            = get(b:, 'coc_diagnostic_info', {})
+   let l:warning_count = get(info,'warning',0)
+   let l:error_count   = get(info,'error',0)
+   return l:error_count && l:warning_count ? '▌' : ''
 endfunction " }}}
-" ALE Functions }}}
+" Coc Functions }}}
+" " ALE Functions {{{
+" function! GetMaybeAleOK() abort " {{{
+"    let l:counts      =  ale#statusline#Count(bufnr(''))
+"    if l:counts.total == 0
+"       call g:HL( 'FalklineStatusLeft'  , 'green' , g:FalklineMainB , 'none' )
+"       call g:HL( 'FalklineStatusRight' , 'green' , g:FalklineMainB , 'none' )
+"    endif
+"    return ''
+" endfunction " }}}
+" function! GetMaybeAleErrors() abort " {{{
+"    let l:counts         = ale#statusline#Count(bufnr(''))
+"    let l:all_errors     = l:counts.error + l:counts.style_error
+"    let l:all_non_errors = l:counts.total - l:all_errors
+"    if l:all_errors > 0
+"       call g:HL( 'FalklineStatusLeft' , 'red' , g:FalklineMainB , 'none' )
+"       if l:all_non_errors == 0
+"          call g:HL( 'FalklineStatusRight' , 'red' , g:FalklineMainB , 'none' )
+"       endif
+"       return printf("%d", l:all_errors)
+"    else
+"       return ''
+"    endif
+" endfunction " }}}
+" function! GetMaybeAleWarnings() abort " {{{
+"    let l:counts         = ale#statusline#Count(bufnr(''))
+"    let l:all_errors     = l:counts.error + l:counts.style_error
+"    let l:all_non_errors = l:counts.total - l:all_errors
+"    if l:all_non_errors > 0
+"       if l:all_errors == 0
+"          call g:HL( 'FalklineStatusLeft' , 'yellow' , g:FalklineMainB , 'none' )
+"       endif
+"       call g:HL( 'FalklineStatusRight' , 'yellow' , g:FalklineMainB , 'none' )
+"       return printf("%d", l:all_non_errors)
+"    else
+"       return ''
+"    endif
+"    return l:all_non_errors == 0 ? '' : printf("%d", l:all_non_errors)
+" endfunction " }}}
+" function! GetMaybeAleSpacer() abort " {{{
+"    let l:counts            =  ale#statusline#Count(bufnr(''))
+"    let l:all_errors        =  l:counts.error + l:counts.style_error
+"    let l:all_non_errors    =  l:counts.total - l:all_errors
+"    return l:all_non_errors == 0 || l:all_errors == 0 ? '' : '▌'
+" endfunction " }}}
+" " ALE Functions }}}
 function! RedrawModeColors(mode) " {{{
    " Toggle between bar and floating capsules depending on split status: {{{
    if len(tabpagebuflist()) == 1 || g:inGoyo == 1
@@ -243,13 +288,13 @@ endfunction " }}}
 " ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
 
-" ALE Warnings And Errors:
-   set statusline+=%#FalklineAleLeft#
-   set statusline+=%{GetMaybeAleOK()}
-   set statusline+=%#FalklineAleErrorBody#%{GetMaybeAleErrors()}
-   set statusline+=%#FalklineAleSpacer#%{GetMaybeAleSpacer()}
-   set statusline+=%#FalklineAleWarningBody#%{GetMaybeAleWarnings()}
-   set statusline+=%#FalklineAleRight#
+" Coc Warnings And Errors:
+   set statusline+=%#FalklineStatusLeft#
+   set statusline+=%{GetMaybeCocOK()}
+   set statusline+=%#FalklineStatusErrorBody#%{GetMaybeCocErrors()}
+   set statusline+=%#FalklineStatusSpacer#%{GetMaybeCocSpacer()}
+   set statusline+=%#FalklineStatusWarningBody#%{GetMaybeCocWarnings()}
+   set statusline+=%#FalklineStatusRight#
 
 " Padding:
    set statusline+=\ 
