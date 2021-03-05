@@ -32,15 +32,14 @@ set laststatus=2
 " Prerequsite Settings }}}
 " Functions {{{
 " Coc Functions {{{
-
-function !GetMaybeStatusMsgLeft() abort " {{{
-		if get(g:, 'coc_status', '') == ''
+function! GetMaybeStatusMsgLeft() abort " {{{
+	if get(g:, 'coc_status', '') == ''
 		return ''
 	else
 		return ''
 	endif
 endfunction " }}}
-function !GetMaybeStatusMsgRight() abort " {{{
+function! GetMaybeStatusMsgRight() abort " {{{
 	if get(g:, 'coc_status', '') == ''
 		return ''
 	else
