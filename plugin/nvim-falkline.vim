@@ -38,7 +38,7 @@ function! GetMaybeCocOK() abort " {{{
    endif
    return ''
 endfunction " }}}
-function! GetMaybeStatusErrors() abort " {{{
+function! GetMaybeCocErrors() abort " {{{
 	let info            = get(b:, 'coc_diagnostic_info', {})
    let l:warning_count = get(info,'warning',0)
    let l:error_count   = get(info,'error',0)
