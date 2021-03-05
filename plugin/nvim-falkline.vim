@@ -313,7 +313,7 @@ endfunction " }}}
 
 " Coc Warnings And Errors:
    set statusline+=%#FalklineStatusMsgTransition#%{GetMaybeStatusMsgLeft()}
-	set statusline+=FalklineStatusMsgBody#%{GetMaybeCocStatusMsg()}
+	set statusline+=%#FalklineStatusMsgBody#%{GetMaybeCocStatusMsg()}
    set statusline+=%#FalklineStatusMsgTransition#%{GetMaybeStatusMsgRight()}
 	" Padding:
 		set statusline+=\ 
