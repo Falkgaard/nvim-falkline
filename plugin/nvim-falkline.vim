@@ -1,23 +1,25 @@
 " TODO: Git stats in git blob
 " Falkline {{{
 " NOTE: Might also be set in RedrawModeColors!
-call g:HL( 'StatusLine'             , 'mid_dark'   , 'none'       , 'none'   )
-call g:HL( 'StatusLineNC'           , 'black'      , 'none'       , 'bold'   )
-call g:HL( 'FalklineSeparator'      , 'dark_fg'    , 'mid_dark'   , 'none'   )
-call g:HL( 'FalklineModified'       , 'mid_dark'   , 'none'       , 'none'   )
-call g:HL( 'FalklineFiletype'       , 'mid_dark'   , 'none'       , 'none'   )
-call g:HL( 'FalklineFiletypeBody'   , 'white'      , 'mid_dark'   , 'italic' )
-call g:HL( 'FalklinePercentage'     , 'mid_dark'   , 'none'       , 'none'   )
-call g:HL( 'FalklinePercentageBody' , 'dim_fg'     , 'mid_dark'   , 'none'   )
-call g:HL( 'FalklineLineGit'        , 'mid_dark'   , 'none'       , 'none'   )
-call g:HL( 'FalklineLineGitBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
-call g:HL( 'FalklineLineGitSymbol'  , 'white'      , 'mid_dark'   , 'none'   )
-call g:HL( 'FalklineLineCol'        , 'mid_dark'   , 'none'       , 'none'   )
-call g:HL( 'FalklineLineColBody'    , 'dim_fg'     , 'mid_dark'   , 'none'   )
-call g:HL( 'FalklineStatusOkBody'      , 'white'      , 'green'      , 'bold'   )
-call g:HL( 'FalklineStatusWarningBody' , 'red'        , 'yellow'     , 'bold'   )
-call g:HL( 'FalklineStatusErrorBody'   , 'white'      , 'red'        , 'bold'   )
-call g:HL( 'FalklineStatusSpacer'      , 'red'        , 'yellow'     , 'none'   )
+call g:HL( 'StatusLine'                  , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'StatusLineNC'                , 'black'      , 'none'       , 'bold'   )
+call g:HL( 'FalklineSeparator'           , 'dark_fg'    , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineModified'            , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineFiletype'            , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineFiletypeBody'        , 'white'      , 'mid_dark'   , 'italic' )
+call g:HL( 'FalklinePercentage'          , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklinePercentageBody'      , 'dim_fg'     , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineLineGit'             , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineLineGitBody'         , 'dim_fg'     , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineLineGitSymbol'       , 'white'      , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineLineCol'             , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineLineColBody'         , 'dim_fg'     , 'mid_dark'   , 'none'   )
+call g:HL( 'FalklineStatusMsgBody'       , 'white'      , 'mid_dark'   , 'bold'   )
+call g:HL( 'FalklineStatusMsgTransition' , 'mid_dark'   , 'none'       , 'none'   )
+call g:HL( 'FalklineStatusOkBody'        , 'white'      , 'green'      , 'bold'   )
+call g:HL( 'FalklineStatusWarningBody'   , 'red'        , 'yellow'     , 'bold'   )
+call g:HL( 'FalklineStatusErrorBody'     , 'white'      , 'red'        , 'bold'   )
+call g:HL( 'FalklineStatusSpacer'        , 'red'        , 'yellow'     , 'none'   )
 " Primary and secondary colours, changed in RedrawModeColors()
 let g:FalklineMainA = 'mid_dark'
 let g:FalklineMainB = 'none'
@@ -30,8 +32,27 @@ set laststatus=2
 " Prerequsite Settings }}}
 " Functions {{{
 " Coc Functions {{{
+
+function !GetMaybeStatusMsgLeft() abort " {{{
+		if get(g:, 'coc_status', '') == ''
+		return ''
+	else
+		return ''
+	endif
+endfunction " }}}
+function !GetMaybeStatusMsgRight() abort " {{{
+	if get(g:, 'coc_status', '') == ''
+		return ''
+	else
+		return ''
+	endif
+endfunction " }}}
+function! GetMaybeCocStatusMsg() abort " {{{
+  return get(g:, 'coc_status', '')
+endfunction " }}}
 function! GetMaybeCocOK() abort " {{{
 	let info = get(b:, 'coc_diagnostic_info', {})
+   if empty(info) | return '' | endif
    if !get(info, 'error', 0) && !get(info, 'warning', 0)
       call g:HL( 'FalklineStatusLeft'  , 'green' , g:FalklineMainB , 'none' )
       call g:HL( 'FalklineStatusRight' , 'green' , g:FalklineMainB , 'none' )
@@ -40,6 +61,7 @@ function! GetMaybeCocOK() abort " {{{
 endfunction " }}}
 function! GetMaybeCocErrors() abort " {{{
 	let info            = get(b:, 'coc_diagnostic_info', {})
+   if empty(info) | return '' | endif
    let l:warning_count = get(info,'warning',0)
    let l:error_count   = get(info,'error',0)
    if l:error_count > 0
@@ -54,6 +76,7 @@ function! GetMaybeCocErrors() abort " {{{
 endfunction " }}}
 function! GetMaybeCocWarnings() abort " {{{
 	let info            = get(b:, 'coc_diagnostic_info', {})
+   if empty(info) | return '' | endif
    let l:warning_count = get(info,'warning',0)
    let l:error_count   = get(info,'error',0)
    if l:warning_count > 0
@@ -69,6 +92,7 @@ function! GetMaybeCocWarnings() abort " {{{
 endfunction " }}}
 function! GetMaybeCocSpacer() abort " {{{
 	let info            = get(b:, 'coc_diagnostic_info', {})
+   if empty(info) | return '' | endif
    let l:warning_count = get(info,'warning',0)
    let l:error_count   = get(info,'error',0)
    return l:error_count && l:warning_count ? '▌' : ''
@@ -289,6 +313,11 @@ endfunction " }}}
 
 
 " Coc Warnings And Errors:
+   set statusline+=%#FalklineStatusMsgTransition#%{GetMaybeStatusMsgLeft()}
+	set statusline+=FalklineStatusMsgBody#%{GetMaybeCocStatusMsg()}
+   set statusline+=%#FalklineStatusMsgTransition#%{GetMaybeStatusMsgRight()}
+	" Padding:
+		set statusline+=\ 
    set statusline+=%#FalklineStatusLeft#
    set statusline+=%{GetMaybeCocOK()}
    set statusline+=%#FalklineStatusErrorBody#%{GetMaybeCocErrors()}
